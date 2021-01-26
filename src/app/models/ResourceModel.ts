@@ -9,7 +9,7 @@ export class ResourceModel {
   @observable public population: number;
   @observable public maxPopulation: number;
 
-  constructor(townId: number, timber: number = 500, clay: number = 500, iron: number = 500, storageCapacity: number = 1500, population: number = 0, maxPopulation: number = 50) {
+  constructor(townId: number, timber = 500, clay = 500, iron = 500, storageCapacity = 1500, population = 0, maxPopulation = 50) {
     this.townId = townId;
     this.timber = timber;
     this.clay = clay;

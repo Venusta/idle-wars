@@ -1,11 +1,10 @@
 import React from 'react'
 import * as style from './style.css';
-import { ResourceModel } from '../../models'
 import { useStores } from '../../stores/appContext'
 import { observer } from 'mobx-react';
 
 export const ResourceDisplay = observer(() => {
-  const { resources: { timber, clay, iron, storageCapacity, population, maxPopulation } } = useStores().userStore
+  const { resources: { timber, clay, iron, storageCapacity, population, maxPopulation } } = useStores().userStore.towns[0]
 
   return (
     <div>

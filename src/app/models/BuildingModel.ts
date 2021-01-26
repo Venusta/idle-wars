@@ -1,13 +1,12 @@
 import { observable } from 'mobx';
+import { BuildingType } from '../components/BuildingTable/BuildingTableRow'
 
 export class BuildingModel {
-  readonly buildingType: number;
-  readonly townId: number;
+  readonly buildingType: BuildingType;
   @observable public level: number;
 
-  constructor(buildingType: number, buildingLevel: number, townId: number) {
+  constructor(buildingType: BuildingType, buildingLevel: number) {
     this.buildingType = buildingType;
-    this.townId = townId;
     this.level = buildingLevel;
   }
 }

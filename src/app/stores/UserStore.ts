@@ -1,16 +1,7 @@
 import { observable, action } from "mobx"
-import { ResourceModel, BuildingModel } from 'app/models';
-import { buildingData } from "../components/BuildingTable/BuildingTableRow"
+import { ResourceModel, BuildingModel, TownModel } from 'app/models';
+import { buildingData, BuildingType } from "../components/BuildingTable/BuildingTableRow"
 import { RootStore } from "./RootStore"
-
-const defaultBuildings = [
-  new BuildingModel(0, 0, 0),
-  new BuildingModel(1, 0, 0),
-  new BuildingModel(2, 0, 0),
-  new BuildingModel(3, 0, 0)
-];
-
-const defaultResources = new ResourceModel(0);
 
 enum ResourceType {
   Timber = 0,
@@ -19,51 +10,111 @@ enum ResourceType {
   Population = 3
 }
 
-interface ResourcePayload {
-  timber: number;
-  clay: number;
-  iron: number;
-  population: number;
-}
-
 export class UserStore {
   private readonly root: RootStore;
-  @observable public buildings: BuildingModel[];
-  @observable public resources: ResourceModel;
+  @observable public towns: TownModel[]
 
   constructor(root: RootStore) {
     this.root = root;
-    this.buildings = observable.array(defaultBuildings);
-    this.resources = defaultResources;
-
-    console.log(this.buildings);
+    this.towns = [new TownModel(0)]
   }
 
   @action
-  addResources(payload: ResourcePayload): void {
-    for (const [k, v] of Object.entries(payload)) {
-      this.resources[k] += v;
-    }
-  }
-
-  @action
-  removeResources(payload: ResourcePayload): void {
-    for (const [k, v] of Object.entries(payload)) {
-      this.resources[k] -= v;
-    }
-  }
-
-  @action
-  constructBuilding(buildingType: number, townId: number): void {
-    const buildingIndex = this.buildings.findIndex((building) => building.townId === townId && building.buildingType === buildingType);
-    if (this.buildings[buildingIndex] == undefined) {
-      console.error(`Failed to find building ${buildingType} in town ${townId}`);
-      return;
-    }
-    const { cost } = buildingData[this.buildings[buildingIndex].level];
-    this.removeResources(cost);
-    console.log(this.buildings[buildingIndex].level); // correct  / UI broken
-    
-    this.buildings[buildingIndex].level += 1;
+  constructBuilding2(townId: number, building: BuildingType): void {
+    const townIndex = this.towns.findIndex((town) => town.id === townId)
+    this.towns[townIndex].constructBuilding(building)
   }
 }
+
+const queueTypes = {
+  headquarters: 0,
+  stable: 1,
+  barracks: 2,
+  research: 3,
+  statue: 4,
+  workshop: 5,
+  academy: 6,
+}
+
+const time2 = new Date().valueOf();
+
+const blah = [
+  {
+    name: "Town Name",
+    id: 0, //uuid?
+    coords: { x: 5, y: 10 }, // maybe, probably to calc time/distance between each village w/e
+
+    hqQueue: [
+      { item: "timberCamp", amount: 1, endTime: time2 },
+      { item: "timberCamp", amount: 1, endTime: time2 + 60 },
+      { item: "timberCamp", amount: 1, endTime: time2 + 90 },
+    ],
+    stableQueue: [
+      { item: "scout", amount: 50, endTime: 278934567823645 },
+      { item: "scout", amount: 10, endTime: 278934567823649 },
+    ],
+    barracksQueue: [
+      { item: "spear", amount: 20, endTime: 278934567823234 },
+      { item: "light cav", amount: 1, endTime: 278934567823234 },
+    ],
+    // queue: [
+    //   { type: queueTypes.headquarters, item: "timberCamp", amount: 1, endTime: 278934567823645 },
+    //   { type: queueTypes.headquarters, item: "timberCamp", amount: 1, endTime: 278934567823645 },
+    //   { type: queueTypes.headquarters, item: "timberCamp", amount: 1, endTime: 278934567823645 },
+    //   { type: queueTypes.stable, item: "scout", amount: 50, endTime: 278934567823645 },
+    //   { type: queueTypes.stable, item: "scout", amount: 10, endTime: 278934567823649 },
+    //   { type: queueTypes.barracks, item: "spear", amount: 20, endTime: 278934567823234 },
+    //   { type: queueTypes.research, item: "light cav", amount: 1, endTime: 278934567823234 },
+    // ],
+
+    buildings: {
+      headquarters: 10,
+      barracks: 5,
+      stable: 2,
+      timberCamp: 10,
+      clayPit: 7,
+      ironMine: 4,
+      warehouse: 7,
+      farm: 4,
+      // all the buildings
+    },
+    population: [50, 386],
+    units: {
+      spear: 9,
+      lightCav: 50,
+      scout: 20,
+    },
+    resources: {
+      timber: 1150,
+      clay: 1160,
+      iron: 1170,
+      max: 3454, // calc from warehouse level
+    },
+    resourceGeneration: {
+      timber: 175,
+      clay: 111,
+      iron: 71,
+    },
+  }
+]
+
+const checkTime = (queue: { endTime: number, item: string; }[]) => {
+  const time = new Date().valueOf();
+  if (queue.length > 0) {
+    if (queue[0].endTime <= time) {
+      console.log(`${queue[0].item} completed`);
+      queue.pop(); // lvl up                
+      // rootStore.userStore.constructBuilding2(0,0)
+    }
+  }
+}
+
+const processQueue = () => {
+  blah.forEach((town) => {
+    const { hqQueue, stableQueue, barracksQueue } = town;
+    console.log(hqQueue);
+    checkTime(hqQueue);
+  })
+}
+
+processQueue();

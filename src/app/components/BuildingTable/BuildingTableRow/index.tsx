@@ -16,11 +16,18 @@ export const buildingData = [
   { cost: { timber: 7, clay: 5, iron: 2, population: -2 }, constructionTime: 50 },
 ]
 
+export enum BuildingType {
+  Headquarters = 0,
+  TimberCamp = 1,
+  ClayPit = 2,
+  IronMine = 3
+}
+
 const buildingNames = {
-  0: "Headquartes",
-  1: "Timber camp",
-  2: "Clay pit",
-  3: "Iron mine"
+  [BuildingType.Headquarters]: "Headquarters",
+  [BuildingType.TimberCamp]: "Timber camp",
+  [BuildingType.ClayPit]: "Clay pit",
+  [BuildingType.IronMine]: "Iron mine"
 }
 
 interface BuildingTableRowProps {
@@ -47,7 +54,7 @@ export const BuildingTableRow: React.FC<BuildingTableRowProps> = observer((props
       <td>{iron}</td>
       <td>{formattedTime}</td>
       <td>{-population}</td>
-      <td><button onClick={() => userStore.constructBuilding(props.type, props.townId)}>Construct</button></td>
+      <td><button onClick={() => userStore.constructBuilding2(props.townId, props.type)}>Construct</button></td>
     </tr>
   );
 });

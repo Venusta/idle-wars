@@ -1,20 +1,18 @@
 import React, { useRef } from 'react'
 import * as style from './style.css';
-import { BuildingModel } from '../../models'
 import { useStores } from '../../stores/appContext'
 import { observer } from 'mobx-react';
-import { reaction } from 'mobx';
 import { BuildingTableRow } from './BuildingTableRow';
 
 export const BuildingTable = observer(() => {
   const { userStore } = useStores();
 
   const renderRows = () => {
-    return userStore.buildings.map((building) => (
+    return userStore.towns[0].buildings.map((building) => (
       <BuildingTableRow
         level={building.level}
         type={building.buildingType}
-        townId={building.townId}
+        townId={0}
       />
     ));
   }
