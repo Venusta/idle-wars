@@ -2,6 +2,7 @@ import { observable, action } from "mobx"
 import { ResourceModel, BuildingModel, TownModel } from 'app/models';
 import { buildingData, BuildingType } from "../components/BuildingTable/BuildingTableRow"
 import { RootStore } from "./RootStore"
+import { rootStore } from "./appContext";
 
 enum ResourceType {
   Timber = 0,
@@ -104,7 +105,7 @@ const checkTime = (queue: { endTime: number, item: string; }[]) => {
     if (queue[0].endTime <= time) {
       console.log(`${queue[0].item} completed`);
       queue.pop(); // lvl up                
-      // rootStore.userStore.constructBuilding2(0,0)
+      rootStore.userStore.constructBuilding2(0,0)
     }
   }
 }

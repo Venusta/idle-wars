@@ -1,7 +1,7 @@
 import React from 'react';
 import { RootStore } from './rootStore';
 
-const rootStore = new RootStore();
+export const rootStore = new RootStore();
 const stores = {
   userStore: rootStore.userStore,
 };
