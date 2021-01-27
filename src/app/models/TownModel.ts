@@ -61,7 +61,9 @@ export class TownModel {
       console.error(`Failed to find building ${buildingType} in town ${this.id}`);
       return;
     }
-    const { cost } = buildingData[this.buildings[buildingIndex].level];
+    const { cost } = buildingData(this.buildings[buildingIndex].level);
+    console.log(cost);
+    
     this.removeResources(cost);
     this.buildings[buildingIndex].level += 1;
     // this.calculateResourceGeneration

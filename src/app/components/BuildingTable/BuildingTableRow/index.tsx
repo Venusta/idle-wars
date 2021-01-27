@@ -2,19 +2,16 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { useStores } from '../../../stores/appContext'
 
-export const buildingData = [
-  { cost: { timber: 7, clay: 5, iron: 2, population: -2 }, constructionTime: 50 },
-  { cost: { timber: 7, clay: 5, iron: 2, population: -3 }, constructionTime: 50 },
-  { cost: { timber: 7, clay: 555, iron: 2, population: -5 }, constructionTime: 50 },
-  { cost: { timber: 7, clay: 5, iron: 2, population: -12 }, constructionTime: 50 },
-  { cost: { timber: 7, clay: 5, iron: 2, population: -52 }, constructionTime: 50 },
-  { cost: { timber: 7, clay: 5, iron: 2, population: -2 }, constructionTime: 50 },
-  { cost: { timber: 7, clay: 5, iron: 2, population: -2 }, constructionTime: 50 },
-  { cost: { timber: 7, clay: 5, iron: 2, population: -2 }, constructionTime: 50 },
-  { cost: { timber: 7, clay: 5, iron: 2, population: -2 }, constructionTime: 50 },
-  { cost: { timber: 7, clay: 5, iron: 2, population: -2 }, constructionTime: 50 },
-  { cost: { timber: 7, clay: 5, iron: 2, population: -2 }, constructionTime: 50 },
-]
+export const buildingData = (level = 1) => { // TODO move this
+  level = level + 1
+  const timber = 7 * level;
+  const clay = 5 * level;
+  const iron = 2 * level;
+  const population = -2;
+  const constructionTime = 50 * level
+
+  return { cost: { timber, clay, iron, population }, constructionTime }
+}
 
 export enum BuildingType {
   Headquarters = 0,
@@ -39,7 +36,7 @@ interface BuildingTableRowProps {
 export const BuildingTableRow: React.FC<BuildingTableRowProps> = observer((props) => {
   const { userStore } = useStores();
 
-  const { cost: { timber, clay, iron, population }, constructionTime } = buildingData[props.level];
+  const { cost: { timber, clay, iron, population }, constructionTime } = buildingData(props.level);
   const formattedTime = new Date(constructionTime * 1000).toISOString().substr(11, 8)
 
   return (
