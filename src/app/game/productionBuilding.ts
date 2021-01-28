@@ -7,10 +7,10 @@ export class ProductionBuilding extends Building {
   cost: any;
   maxLevel: number;
   buildTime: number;
-  generate: ResourceGenProps;
+  creates: ResourceGenProps;
 
-  constructor({ id, name, cost, maxLevel, buildTime, generate }: ProductionBuildingProps) {
+  constructor({ id, name, cost, maxLevel, buildTime, creates }: ProductionBuildingProps) {
     super({ id, name, cost, maxLevel, buildTime })
-    this.generate = generate;
+    this.creates = creates;
   }
 }

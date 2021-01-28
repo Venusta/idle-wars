@@ -27,3 +27,7 @@ export interface BuildingProps {
 export interface ResourceBuildingProps extends BuildingProps {
   generate: ResourceGenProps;
 }
+
+export interface ProductionBuildingProps extends BuildingProps {
+  creates: ResourceGenProps;
+}

@@ -17,5 +17,5 @@ export const Stable = new ProductionBuilding({
     //mounted archer
     //heavy cavalry
     //scout
-  }
+  },
 })
