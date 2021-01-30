@@ -22,7 +22,7 @@ export class Building {
   }
 
   @action
-  construct = (): void => {
+  levelUp = (): void => {
     this.level += 1;
   }
 

@@ -4,11 +4,11 @@ import { useStores } from '../../stores/appContext'
 import { observer } from 'mobx-react';
 import { BuildingTableRow } from './BuildingTableRow';
 
-export const BuildingTable = observer(() => {
+export const BuildingTable = observer(({ townId }: { townId: number }) => {
   const { userStore } = useStores();
 
   const renderRows = () => {
-    return userStore.towns[0].buildings.map((building) => (
+    return userStore.towns[townId].buildings.map((building) => (
       <BuildingTableRow
         buildingType={building.type}
         townId={0}

@@ -1,16 +1,11 @@
-// import { Building } from "./building";
-// import { ProductionBuildingProps, ResourceGenProps } from "../../types";
+import { Building } from "./building";
+import { ProductionBuildingProps, CanCreate } from "../../types";
 
-// export class ProductionBuilding extends Building {
-//   type: number;
-//   name: string;
-//   cost: any;
-//   maxLevel: number;
-//   buildTime: number;
-//   creates: ResourceGenProps;
+export class ProductionBuilding extends Building {
+  creates: CanCreate;
 
-//   constructor({ id, name, cost, maxLevel, buildTime, creates }: ProductionBuildingProps) {
-//     super({ id, name, cost, maxLevel, buildTime })
-//     this.creates = creates;
-//   }
-// }
+  constructor({ type, baseCost, baseTime, maxLevel, requirements, creates }: ProductionBuildingProps) {
+    super({ type, baseCost, baseTime, maxLevel, requirements })
+    this.creates = creates;
+  }
+}

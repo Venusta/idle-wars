@@ -1,7 +1,9 @@
 import { addMilliseconds, isAfter, differenceInMilliseconds } from "date-fns";
+import { Building } from "../game/buildings/base/building";
+import { Unit } from "../game/units/base/unit"
 
-export class BuildOrder<T> {
-  public readonly item: T;
+export class QueueItem {
+  public readonly item: Building | Unit;
   public readonly totalDuration: number;
   private startTime!: Date;
   private endTime!: Date;
@@ -16,19 +18,23 @@ export class BuildOrder<T> {
 
   public get progress() {
     if (this.endTime === undefined) {
-      return 0;
+      return this.totalDuration;
     }
 
     if (this.isComplete) {
-      return 1;
+      return 0;
     }
 
     const currentDuration = differenceInMilliseconds(this.endTime, new Date());
 
-    return this.totalDuration / currentDuration;
+    return this.totalDuration - currentDuration;
   }
 
-  public constructor(item: T, durationInMilliseconds: number) {
+  public get completionTime() {
+    return this.endTime;
+  }
+
+  public constructor(item: Building | Unit, durationInMilliseconds: number) {
     this.item = item;
     this.totalDuration = durationInMilliseconds;
   }

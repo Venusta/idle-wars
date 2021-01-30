@@ -1,9 +1,9 @@
-import { ResourcesProps } from "./types";
+import { Resources } from "../../types";
 
 interface UnitProps {
   id: number;
   name: string;
-  cost: ResourcesProps;
+  cost: Resources;
   buildTime: number;
   speed: number;
   atkType: number;
@@ -12,14 +12,14 @@ interface UnitProps {
   defCav: number;
   defArc: number;
   carries: number;
-  researchCost?: ResourcesProps;
+  researchCost?: Resources;
   requirements?: any;
 }
 
 export class Unit {
   id: number;
   name: string;
-  cost: ResourcesProps;
+  cost: Resources;
   buildTime: number;
   speed: number;
   atkType: number;
@@ -28,7 +28,7 @@ export class Unit {
   defCav: number;
   defArc: number;
   carries: number;
-  researchCost?: ResourcesProps;
+  researchCost?: Resources;
   requirements?: any;
 
   constructor({ id, name, cost, buildTime, speed, atkType, atk, def, defCav, defArc, carries, researchCost, requirements }: UnitProps) {

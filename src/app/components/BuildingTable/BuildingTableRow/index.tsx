@@ -32,7 +32,7 @@ export const BuildingTableRow: React.FC<BuildingTableRowProps> = observer(({ tow
       <td>{Math.round(iron)}</td>
       <td>{formattedBuildTime}</td>
       <td>{Math.round(-population)}</td>
-      <td><button onClick={() => building.construct()}>Construct</button></td>
+      <td><button onClick={() => town.constructBuilding(buildingType)}>Construct</button></td>
     </tr>
   );
 });

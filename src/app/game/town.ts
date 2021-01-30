@@ -1,20 +1,25 @@
 import { action, observable } from 'mobx';
-import { Resources } from "./types";
+import { Resources, BuildingType } from "./types";
 import { Building } from "../game/buildings/base/building"
-import { TimberCamp, ClayPit, IronMine, HeadQuarters } from "../game/buildings"
+import { Unit } from "./units/base/unit"
+import { TimberCamp, ClayPit, IronMine, HeadQuarters, Farm, Warehouse } from "../game/buildings"
+import { QueueManager } from 'app/queue/queueManager';
 
 export class Town {
   readonly id: number;
   @observable public buildings: Building[];
   @observable public resources: Resources;
+  public queueManager: QueueManager = new QueueManager();
 
   constructor(townId: number) {
     this.id = townId;
     this.buildings = [
-      new HeadQuarters(),
+      new HeadQuarters(this.queueManager),
       new TimberCamp(),
       new ClayPit(),
-      new IronMine()
+      new IronMine(),
+      new Farm(),
+      new Warehouse()
     ];
     this.resources = {
       timber: 500,
@@ -40,21 +45,16 @@ export class Town {
 
   @action
   constructBuilding(buildingType: number): void {
-    const buildingIndex = this.buildings.findIndex((building) => building.type === buildingType);
-
-    if (this.buildings[buildingIndex] == undefined) {
-      console.error(`Failed to find building ${buildingType} in town ${this.id}`);
-      return;
-    }
-
-    const cost = this.buildings[buildingIndex].getCost();    
+    const headQuarters = this.getBuilding(BuildingType.Headquarters) as HeadQuarters;
+    const building = this.getBuilding(buildingType);
+    const cost = building.getCost();
+    // TODO: Check requirements
     this.removeResources(cost);
-    this.buildings[buildingIndex].construct();
+    headQuarters.queueBuilding(building);
   }
 
   getBuilding(buildingType: number): Building {
     const buildingIndex = this.buildings.findIndex((building) => building.type === buildingType);
     return this.buildings[buildingIndex];
   }
-
 }
