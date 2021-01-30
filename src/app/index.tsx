@@ -3,8 +3,7 @@ import { useEffect } from 'react';
 import { hot } from 'react-hot-loader/root';
 import { Router, Route, Switch } from 'react-router';
 import { BuildingTable } from './components/BuildingTable';
-import { ResourceDisplay } from './components/ResourceDisplay/ResourceDisplay'
-import { processQueue } from './game/queue';
+// import { ResourceDisplay } from './components/ResourceDisplay/ResourceDisplay'
 import { StoreProvider, rootStore } from "./stores/appContext"
 
 console.log(rootStore);
@@ -13,8 +12,8 @@ console.log(rootStore);
 export const App = hot(({ history }) => {
 
   useEffect(() => {
-    console.log("Loading?");    
-    processQueue();
+    // console.log("Loading?");    
+    // processQueue();
   }, [])
 
   return (
@@ -22,7 +21,7 @@ export const App = hot(({ history }) => {
       <Router history={history}>
         <Switch>
           <Route path="/" >
-            <ResourceDisplay />
+            {/* <ResourceDisplay /> */}
             <BuildingTable />
           </Route>
         </Switch>

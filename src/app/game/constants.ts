@@ -1,8 +1,10 @@
-export const TIMBER = 0;
-export const CLAY = 1;
-export const IRON = 2;
-export const POPULATION = 3;
+import { BuildingType } from "../game/types"
 
+export const BuildingNamesDictionary = {
+  [BuildingType.Headquarters]: "Headquarters",
+  [BuildingType.TimberCamp]: "Timber camp",
+  [BuildingType.ClayPit]: "Clay pit",
+  [BuildingType.IronMine]: "Iron mine"
+}
 
-export const TIMBERCAMP = 2;
-export const STABLE = 7;
+export const WorldSpeed = 3;

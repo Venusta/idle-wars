@@ -1,17 +1,17 @@
 import { ResourceBuilding } from "./base/resourceBuilding";
 import { BuildingType } from "../types";
 
-export class TimberCamp extends ResourceBuilding {
+export class ClayPit extends ResourceBuilding {
   constructor() {
     super(
       { 
-        type: BuildingType.TimberCamp, 
+        type: BuildingType.ClayPit, 
         baseCost: 
         {
-          timber: 50,
-          clay: 60,
+          timber: 65,
+          clay: 50,
           iron: 40,
-          population: 5
+          population: 10
         }, 
         baseTime: 300, 
         maxLevel: 30 

@@ -10,8 +10,7 @@ export const BuildingTable = observer(() => {
   const renderRows = () => {
     return userStore.towns[0].buildings.map((building) => (
       <BuildingTableRow
-        level={building.level}
-        type={building.buildingType}
+        buildingType={building.type}
         townId={0}
       />
     ));
